@@ -9,6 +9,11 @@ const SLEEP_TIME_MS = process.env.SLEEP_TIME_MS || 1_000;
 
 app.get("/countdown", function (req, res) {
   connection_counter += 1;
+
+  req.on("end", () => (connection_counter -= 1));
+  req.on("error", (err) => console.error(err));
+  res.on("error", (err) => console.error(err));
+
   res.writeHead(200, {
     "Content-Type": "text/event-stream",
     "Cache-Control": "no-cache",

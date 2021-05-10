@@ -6,7 +6,7 @@ SLICE_SIZE = 30
 (1..10_000).each_slice(SLICE_SIZE) do |slice|
     puts "==== BATCH #{slice.first}-#{slice.last} ===="
     slice.each do |idx|
-        if idx % SLICE_SIZE == 0
+        if idx == 1
             # show output
             clients_pid << spawn("curl https://20210510-test-10k-live-connections.osc-fr1.scalingo.io/countdown")
         else
