@@ -15,7 +15,6 @@ app.get("/countdown", function (req, res) {
     connection_counter -= 1;
     console.log(`Conn count: ${connection_counter}`);
   });
-  // req.on("error", (err) => console.error(err));
   res.on("error", (err) => console.error(err));
 
   res.writeHead(200, {
