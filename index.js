@@ -4,7 +4,7 @@ const app = express();
 app.use(express.static("public"));
 
 let connection_counter = 0;
-const COUNTER_BASE = 500;
+const COUNTER_BASE = process.env.COUNTER_BASE || 1_000_000;
 
 app.get("/countdown", function (req, res) {
   connection_counter += 1;
