@@ -9,11 +9,13 @@ const SLEEP_TIME_MS = process.env.SLEEP_TIME_MS || 1_000;
 
 app.get("/countdown", function (req, res) {
   connection_counter += 1;
+  console.log(`Conn count: ${connection_counter}`);
 
-  req.on("end", () => (connection_counter -= 1));
-  req.on("close", () => (connection_counter -= 1));
-  req.on("error", (err) => console.error(err));
-  res.on("close", () => (connection_counter -= 1));
+  req.on("close", () => {
+    connection_counter -= 1;
+    console.log(`Conn count: ${connection_counter}`);
+  });
+  // req.on("error", (err) => console.error(err));
   res.on("error", (err) => console.error(err));
 
   res.writeHead(200, {
@@ -30,8 +32,9 @@ function countdown(res, count) {
   else {
     connection_counter -= 1;
     res.end();
+    console.log(`Conn count: ${connection_counter}`);
   }
 }
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log("SSE app listening on port 3000!"));
+app.listen(PORT, () => console.log(`SSE app listening on port ${PORT}!`));
